@@ -1,12 +1,10 @@
 import { StyleSheet } from 'react-native';
-// import CORES from '../../comum/constantes/cores';
 import CORES from '../../constantes/cores';
 
 const campoTextoCustomizadoStyle = StyleSheet.create({
   container: {
-    flex: 1,
-    padding: 16,
-    gap: 16,
+    width: '100%',
+    gap: 4,
   },
   campoTexto: {
     borderWidth: 1,
@@ -14,7 +12,7 @@ const campoTextoCustomizadoStyle = StyleSheet.create({
     height: 40,
     padding: 8,
     backgroundColor: CORES.BRANCA,
-    borderRadius: 50,
+    borderRadius: 8,
   },
 });
 
