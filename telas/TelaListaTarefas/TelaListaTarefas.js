@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { FlatList, SafeAreaView, View } from 'react-native';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import ListagemVazia from '../../comum/componentes/ListagemVazia/ListagemVazia';
 import ItemTarefa from './ItemTarefa';
@@ -13,12 +14,25 @@ const TelaListaTarefas = () => {
   const [listaTarefas, setListaTarefas] = React.useState([]);
   const [campoDescricao, setCampoDescricao] = React.useState('');
 
-  const adicinarTarefa = () => {
+  useEffect(() => {
+    const atualizarListagemDoStorage = async () => {
+      const listagemDosStorage = await AsyncStorage.getItem('my-key');
+      if (listagemDosStorage) {
+        setListaTarefas(JSON.parse(listagemDosStorage));
+      }
+    };
+
+    atualizarListagemDoStorage();
+  }, []);
+
+  const adicinarTarefa = async () => {
     // if (campoDescricao !== null && campoDescricao !== undefined && campoDescricao !== '')
     if (campoDescricao) {
       const novaLista = [...listaTarefas, { descricao: campoDescricao, id: +new Date() }];
       setListaTarefas(novaLista);
       setCampoDescricao('');
+
+      await AsyncStorage.setItem('my-key', JSON.stringify(novaLista));
     } else {
       alert('Campo descrição é obrigatório.');
     }
